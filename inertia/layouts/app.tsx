@@ -5,43 +5,51 @@ import { Form } from '@adonisjs/inertia/react'
 import FlashToasts from '~/components/flash_toasts'
 import ThemeToggle from '~/components/theme_toggle'
 import NavLink, { type NavItem } from '~/components/nav_link'
+import { AppBar, Box, Button, Container, Divider, Stack, Toolbar } from '@mui/material'
 
-/**
- * Top-level app navigation. Add an entry here for every new area of your
- * app, and it shows up in the navigation bar with its active state handled.
- */
 const nav: NavItem[] = [{ label: 'Dashboard', route: 'dashboard', icon: House }]
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <>
-      <header className="header header--bar">
-        <div className="header__inner">
-          <Logo size={28} />
-          <div className="header__right">
-            <ThemeToggle />
-            <Form route="session.destroy">
-              <button type="submit" className="btn btn--secondary btn--sm">
-                <LogOut size={15} /> Log out
-              </button>
-            </Form>
-          </div>
-        </div>
-      </header>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <AppBar position="sticky" color="default" elevation={2}>
+        <Container maxWidth="lg">
+          <Toolbar disableGutters sx={{ gap: 3 }}>
+            <Logo size={34} />
 
-      <nav className="subnav">
-        <div className="subnav__inner">
-          {nav.map(({ label, route, icon: Icon }) => (
-            <NavLink key={label} route={route} className="subnav__item">
-              {Icon && <Icon size={14} />}
-              {label}
-            </NavLink>
-          ))}
-        </div>
-      </nav>
+            <Divider orientation="vertical" flexItem sx={{ my: 1.5 }} />
 
-      <div className="app-main">{children}</div>
+            <Stack component="nav" direction="row" spacing={1} sx={{ flexGrow: 1 }}>
+              {nav.map(({ label, route, icon: Icon }) => (
+                <NavLink key={label} route={route}>
+                  {Icon && <Icon size={16} />}
+                  {label}
+                </NavLink>
+              ))}
+            </Stack>
+
+            <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+              <ThemeToggle />
+              <Form route="session.destroy">
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  color="error"
+                  size="small"
+                  startIcon={<LogOut size={16} />}
+                >
+                  Log out
+                </Button>
+              </Form>
+            </Stack>
+          </Toolbar>
+        </Container>
+      </AppBar>
+
+      <Box component="main" sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+        {children}
+      </Box>
       <FlashToasts />
-    </>
+    </Box>
   )
 }

@@ -1,32 +1,110 @@
-import { useState } from 'react'
+import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
 import { Moon, Sun } from 'lucide-react'
 import { usePage } from '@inertiajs/react'
+import { CssBaseline, IconButton, ThemeProvider, Tooltip, createTheme } from '@mui/material'
 
 const COOKIE = 'app_theme'
 const ONE_YEAR = 60 * 60 * 24 * 365
 
-export default function ThemeToggle() {
-  const page = usePage()
-  const [theme, setTheme] = useState<'light' | 'dark'>(page.props.preferences?.theme ?? 'light')
+type ThemeMode = 'light' | 'dark'
 
-  const toggle = () => {
-    const next = theme === 'dark' ? 'light' : 'dark'
-    setTheme(next)
-    document.documentElement.setAttribute('data-theme', next)
-    document.cookie = `${COOKIE}=${next}; path=/; max-age=${ONE_YEAR}; samesite=lax`
+interface ThemeModeContextValue {
+  mode: ThemeMode
+  toggleTheme: () => void
+}
+
+const ThemeModeContext = createContext<ThemeModeContextValue | null>(null)
+
+export function AppThemeProvider({
+  initialTheme = 'light',
+  children,
+}: {
+  initialTheme?: ThemeMode
+  children: ReactNode
+}) {
+  const [mode, setMode] = useState<ThemeMode>(() => {
+    if (typeof document !== 'undefined') {
+      const attr = document.documentElement.getAttribute('data-theme')
+      if (attr === 'dark' || attr === 'light') return attr
+    }
+    return initialTheme
+  })
+
+  const toggleTheme = () => {
+    setMode((prev) => {
+      const next: ThemeMode = prev === 'dark' ? 'light' : 'dark'
+      if (typeof document !== 'undefined') {
+        document.documentElement.setAttribute('data-theme', next)
+        document.cookie = `${COOKIE}=${next}; path=/; max-age=${ONE_YEAR}; samesite=lax`
+      }
+      return next
+    })
   }
 
-  const isDark = theme === 'dark'
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          ...(mode === 'light'
+            ? {
+                background: {
+                  default: '#f5f7fa',
+                  paper: '#ffffff',
+                },
+              }
+            : {
+                background: {
+                  default: '#121212',
+                  paper: '#1e1e1e',
+                },
+              }),
+        },
+        shape: {
+          borderRadius: 8,
+        },
+      }),
+    [mode]
+  )
+
   return (
-    <button
-      type="button"
-      className="iconbtn"
-      onClick={toggle}
-      aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-      title={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
-    >
-      <Sun size={16} className={`themetoggle__icon ${isDark ? 'themetoggle__icon--on' : ''}`} />
-      <Moon size={16} className={`themetoggle__icon ${isDark ? '' : 'themetoggle__icon--on'}`} />
-    </button>
+    <ThemeModeContext.Provider value={{ mode, toggleTheme }}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        {children}
+      </ThemeProvider>
+    </ThemeModeContext.Provider>
+  )
+}
+
+export default function ThemeToggle() {
+  const ctx = useContext(ThemeModeContext)
+  const page = usePage()
+  const [fallbackTheme, setFallbackTheme] = useState<ThemeMode>(
+    page.props.preferences?.theme ?? 'light'
+  )
+
+  const mode = ctx ? ctx.mode : fallbackTheme
+
+  const handleToggle = () => {
+    if (ctx) {
+      ctx.toggleTheme()
+    } else {
+      const next: ThemeMode = fallbackTheme === 'dark' ? 'light' : 'dark'
+      setFallbackTheme(next)
+      document.documentElement.setAttribute('data-theme', next)
+      document.cookie = `${COOKIE}=${next}; path=/; max-age=${ONE_YEAR}; samesite=lax`
+    }
+  }
+
+  const isDark = mode === 'dark'
+  const label = isDark ? 'Switch to light theme' : 'Switch to dark theme'
+
+  return (
+    <Tooltip title={label}>
+      <IconButton onClick={handleToggle} aria-label={label} color="inherit">
+        {isDark ? <Sun size={20} /> : <Moon size={20} />}
+      </IconButton>
+    </Tooltip>
   )
 }

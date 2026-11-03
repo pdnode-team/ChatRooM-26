@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server'
 import { TuyauProvider } from '@adonisjs/inertia/react'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp, type ResolvedComponent } from '@inertiajs/react'
+import { AppThemeProvider } from '~/components/theme_toggle'
 
 export default function render(page: any) {
   return createInertiaApp({
@@ -16,9 +17,12 @@ export default function render(page: any) {
       return resolvedPage.default
     },
     setup: ({ App, props }) => {
+      const initialTheme = (props.initialPage.props as any)?.preferences?.theme ?? 'light'
       return (
         <TuyauProvider client={client}>
-          <App {...props} />
+          <AppThemeProvider initialTheme={initialTheme}>
+            <App {...props} />
+          </AppThemeProvider>
         </TuyauProvider>
       )
     },

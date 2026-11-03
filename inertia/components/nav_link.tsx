@@ -3,6 +3,7 @@ import { usePage } from '@inertiajs/react'
 import { type LucideIcon } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { Link } from '@adonisjs/inertia/react'
+import { Button } from '@mui/material'
 
 export type NavRoute = Parameters<typeof urlFor>[0]
 
@@ -12,12 +13,6 @@ export type NavItem = {
   icon?: LucideIcon
 }
 
-/**
- * A link that marks itself with `aria-current="page"` when the current URL
- * matches its route. By default nested URLs count as a match, so a
- * "Settings" link stays active on "/settings/security". Pass `exact` to
- * only match the route itself.
- */
 export default function NavLink({
   route,
   exact = false,
@@ -35,8 +30,26 @@ export default function NavLink({
   const isActive = exact ? path === href : path === href || path.startsWith(`${href}/`)
 
   return (
-    <Link href={href} className={className} aria-current={isActive ? 'page' : undefined}>
+    <Button
+      component={Link}
+      href={href}
+      className={className}
+      aria-current={isActive ? 'page' : undefined}
+      variant={isActive ? 'tonal' in Button ? 'contained' : 'contained' : 'text'}
+      color={isActive ? 'primary' : 'inherit'}
+      size="small"
+      sx={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        gap: 1,
+        px: 2,
+        py: 0.75,
+        textTransform: 'none',
+        fontWeight: isActive ? 600 : 500,
+      }}
+    >
       {children}
-    </Link>
+    </Button>
   )
 }

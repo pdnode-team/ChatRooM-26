@@ -1,10 +1,6 @@
 import { type ReactNode } from 'react'
+import { Card, CardContent, CardHeader, Divider, Stack } from '@mui/material'
 
-/**
- * A group of content within a page, such as a group of form fields, with
- * an optional title and description. Stack several sections and they are
- * separated by a divider.
- */
 export default function Section({
   title,
   description,
@@ -15,14 +11,31 @@ export default function Section({
   children: ReactNode
 }) {
   return (
-    <section className="section">
+    <Card
+      component="section"
+      elevation={1}
+      sx={{
+        '& + &': {
+          mt: 3,
+        },
+      }}
+    >
       {(title || description) && (
-        <header className="section__header">
-          {title && <h2 className="section__title">{title}</h2>}
-          {description && <p className="section__description">{description}</p>}
-        </header>
+        <>
+          <CardHeader
+            title={title}
+            subheader={description}
+            slotProps={{
+              title: { variant: 'h6', fontWeight: 600 },
+              subheader: { variant: 'body2' },
+            }}
+          />
+          <Divider />
+        </>
       )}
-      <div className="section__body">{children}</div>
-    </section>
+      <CardContent>
+        <Stack spacing={2.5}>{children}</Stack>
+      </CardContent>
+    </Card>
   )
 }

@@ -1,28 +1,45 @@
-import { useEffect } from 'react'
-import { toast, Toaster } from 'sonner'
+import { useEffect, useState } from 'react'
 import { router, usePage } from '@inertiajs/react'
-import { CircleAlert, CircleCheck } from 'lucide-react'
+import { Alert, Snackbar } from '@mui/material'
 
 export default function FlashToasts() {
   const { flash } = usePage()
+  const [open, setOpen] = useState(false)
+  const [message, setMessage] = useState<string>('')
+  const [severity, setSeverity] = useState<'success' | 'error'>('success')
 
   useEffect(() => {
-    return router.on('start', () => toast.dismiss('flash'))
+    return router.on('start', () => setOpen(false))
   }, [])
 
   useEffect(() => {
-    if (flash.error) toast.error(flash.error, { id: 'flash' })
-    if (flash.success) toast.success(flash.success, { id: 'flash' })
+    if (flash.error) {
+      setMessage(flash.error)
+      setSeverity('error')
+      setOpen(true)
+    } else if (flash.success) {
+      setMessage(flash.success)
+      setSeverity('success')
+      setOpen(true)
+    }
   }, [flash])
 
   return (
-    <Toaster
-      position="top-center"
-      toastOptions={{ unstyled: true }}
-      icons={{
-        success: <CircleCheck size={18} strokeWidth={1.8} />,
-        error: <CircleAlert size={18} strokeWidth={1.8} />,
-      }}
-    />
+    <Snackbar
+      open={open}
+      autoHideDuration={4000}
+      onClose={() => setOpen(false)}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+    >
+      <Alert
+        onClose={() => setOpen(false)}
+        severity={severity}
+        variant="filled"
+        elevation={6}
+        sx={{ width: '100%' }}
+      >
+        {message}
+      </Alert>
+    </Snackbar>
   )
 }

@@ -1,11 +1,7 @@
 import { type ReactNode } from 'react'
 import { Head } from '@inertiajs/react'
+import { Box, Container, Divider, Stack, Typography } from '@mui/material'
 
-/**
- * The frame for an app page: sets the document title and renders the page
- * heading, an optional description and optional actions (buttons, links)
- * aligned to the right. Pass `hideTitle` to only set the document title.
- */
 export default function Page({
   title,
   hideTitle = false,
@@ -22,18 +18,41 @@ export default function Page({
   const hasHeader = !hideTitle || description || actions
 
   return (
-    <div className="page">
+    <Container
+      maxWidth="lg"
+      sx={{ py: { xs: 3, md: 4 }, flex: 1, display: 'flex', flexDirection: 'column' }}
+    >
       <Head title={title} />
       {hasHeader && (
-        <header className="page__header">
-          <div>
-            {!hideTitle && <h1 className="page__title">{title}</h1>}
-            {description && <p className="page__description">{description}</p>}
-          </div>
-          {actions && <div className="page__actions">{actions}</div>}
-        </header>
+        <Box component="header" sx={{ mb: 3 }}>
+          <Stack
+            direction={{ xs: 'column', sm: 'row' }}
+            justifyContent="space-between"
+            alignItems={{ xs: 'flex-start', sm: 'center' }}
+            spacing={2}
+          >
+            <Box>
+              {!hideTitle && (
+                <Typography variant="h4" component="h1" fontWeight={700}>
+                  {title}
+                </Typography>
+              )}
+              {description && (
+                <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
+                  {description}
+                </Typography>
+              )}
+            </Box>
+            {actions && (
+              <Stack direction="row" spacing={1.5} alignItems="center">
+                {actions}
+              </Stack>
+            )}
+          </Stack>
+          <Divider sx={{ mt: 2.5 }} />
+        </Box>
       )}
       {children}
-    </div>
+    </Container>
   )
 }

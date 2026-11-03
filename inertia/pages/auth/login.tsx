@@ -1,66 +1,77 @@
 import AuthLayout from '~/layouts/auth'
+import { urlFor } from '~/client'
+import { Lock } from 'lucide-react'
 import { Form, Link } from '@adonisjs/inertia/react'
+import { Avatar, Button, Divider, Link as MuiLink, Stack, TextField, Typography } from '@mui/material'
 
 export default function Login() {
   return (
-    <>
-      <h1 className="auth__title">Welcome back</h1>
-      <p className="auth__sub">Sign in to continue building.</p>
+    <Stack spacing={3}>
+      <Stack alignItems="center" spacing={1} textAlign="center">
+        <Avatar sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', width: 48, height: 48 }}>
+          <Lock size={22} />
+        </Avatar>
+        <Typography variant="h5" component="h1" fontWeight={700}>
+          Welcome back
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Sign in to continue to ChatRooM
+        </Typography>
+      </Stack>
 
       <Form route="session.store">
         {({ errors, processing }) => (
-          <div className="auth__form">
-            <div className="field">
-              <label className="field__label" htmlFor="email">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                type="email"
-                className="field__input"
-                autoComplete="username"
-                placeholder="you@example.com"
-                aria-invalid={errors.email ? 'true' : 'false'}
-              />
-              {errors.email && <span className="field__error">{errors.email}</span>}
-            </div>
+          <Stack spacing={2.5}>
+            <TextField
+              id="email"
+              name="email"
+              type="email"
+              label="Email Address"
+              autoComplete="username"
+              placeholder="you@example.com"
+              fullWidth
+              error={Boolean(errors.email)}
+              helperText={errors.email}
+            />
 
-            <div className="field">
-              <label className="field__label" htmlFor="password">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                className="field__input"
-                autoComplete="current-password"
-                placeholder="••••••••"
-                aria-invalid={errors.password ? 'true' : 'false'}
-              />
-              {errors.password && <span className="field__error">{errors.password}</span>}
-            </div>
+            <TextField
+              id="password"
+              name="password"
+              type="password"
+              label="Password"
+              autoComplete="current-password"
+              fullWidth
+              error={Boolean(errors.password)}
+              helperText={errors.password}
+            />
 
-            <button
+            <Button
               type="submit"
-              className="btn btn--primary btn--block"
+              variant="contained"
+              size="large"
+              fullWidth
               disabled={processing}
-              style={{ marginTop: 4 }}
             >
               {processing ? 'One moment…' : 'Sign in'}
-            </button>
-          </div>
+            </Button>
+          </Stack>
         )}
       </Form>
 
-      <p className="auth__foot">
+      <Divider />
+
+      <Typography variant="body2" color="text.secondary" textAlign="center">
         New here?{' '}
-        <Link route="new_account.create" className="il">
+        <MuiLink
+          component={Link}
+          href={urlFor('new_account.create')}
+          underline="hover"
+          fontWeight={600}
+        >
           Create an account
-        </Link>
-      </p>
-    </>
+        </MuiLink>
+      </Typography>
+    </Stack>
   )
 }
 

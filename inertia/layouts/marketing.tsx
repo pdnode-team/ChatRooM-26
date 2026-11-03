@@ -1,11 +1,10 @@
-import Logo from '~/components/logo'
 import { urlFor } from '~/client'
 import { type ReactNode } from 'react'
-import { usePage } from '@inertiajs/react'
-import { Link } from '@adonisjs/inertia/react'
+import { usePage, Link } from '@inertiajs/react'
 import FlashToasts from '~/components/flash_toasts'
 import ThemeToggle from '~/components/theme_toggle'
 import { AppBar, Box, Button, Container, Stack, Toolbar } from '@mui/material'
+import Logo from '~/components/logo'
 
 export default function MarketingLayout({ children }: { children: ReactNode }) {
   const { props } = usePage()
@@ -14,36 +13,28 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
       <AppBar position="sticky" color="default" elevation={2}>
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            <Logo size={34} />
-            <Stack direction="row" spacing={1.5} alignItems="center">
+            <Logo />
+            <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
               <ThemeToggle />
               {props.user ? (
-                <Button
-                  component={Link}
-                  href={urlFor('dashboard')}
-                  variant="contained"
-                  color="primary"
-                >
-                  Dashboard
-                </Button>
+                <Link href={urlFor('dashboard')}>
+                  <Button variant="contained" color="primary">
+                    Dashboard
+                  </Button>
+                </Link>
               ) : (
                 <>
-                  <Button
-                    component={Link}
-                    href={urlFor('session.create')}
-                    variant="outlined"
-                    color="primary"
-                  >
-                    Sign in
-                  </Button>
-                  <Button
-                    component={Link}
-                    href={urlFor('new_account.create')}
-                    variant="contained"
-                    color="primary"
-                  >
-                    Get started
-                  </Button>
+                  <Link href={urlFor('session.create')}>
+                    <Button variant="outlined" color="primary">
+                      Sign in
+                    </Button>
+                  </Link>
+
+                  <Link href={urlFor('new_account.create')}>
+                    <Button variant="contained" color="primary">
+                      Get started
+                    </Button>
+                  </Link>
                 </>
               )}
             </Stack>

@@ -27,13 +27,15 @@ export default function Page({
         <Box component="header" sx={{ mb: 3 }}>
           <Stack
             direction={{ xs: 'column', sm: 'row' }}
-            justifyContent="space-between"
-            alignItems={{ xs: 'flex-start', sm: 'center' }}
             spacing={2}
+            sx={{
+              justifyContent: 'space-between',
+              alignItems: { xs: 'flex-start', sm: 'center' },
+            }}
           >
             <Box>
               {!hideTitle && (
-                <Typography variant="h4" component="h1" fontWeight={700}>
+                <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
                   {title}
                 </Typography>
               )}
@@ -44,7 +46,7 @@ export default function Page({
               )}
             </Box>
             {actions && (
-              <Stack direction="row" spacing={1.5} alignItems="center">
+              <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
                 {actions}
               </Stack>
             )}

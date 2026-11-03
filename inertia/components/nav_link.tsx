@@ -30,26 +30,26 @@ export default function NavLink({
   const isActive = exact ? path === href : path === href || path.startsWith(`${href}/`)
 
   return (
-    <Button
-      component={Link}
-      href={href}
-      className={className}
-      aria-current={isActive ? 'page' : undefined}
-      variant={isActive ? 'tonal' in Button ? 'contained' : 'contained' : 'text'}
-      color={isActive ? 'primary' : 'inherit'}
-      size="small"
-      sx={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'flex-start',
-        gap: 1,
-        px: 2,
-        py: 0.75,
-        textTransform: 'none',
-        fontWeight: isActive ? 600 : 500,
-      }}
-    >
-      {children}
-    </Button>
+    <Link href={href}>
+      <Button
+        className={className}
+        aria-current={isActive ? 'page' : undefined}
+        variant={isActive ? ('tonal' in Button ? 'contained' : 'contained') : 'text'}
+        color={isActive ? 'primary' : 'inherit'}
+        size="small"
+        sx={{
+          display: 'inline-flex',
+          alignItems: 'center',
+          justifyContent: 'flex-start',
+          gap: 1,
+          px: 2,
+          py: 0.75,
+          textTransform: 'none',
+          fontWeight: isActive ? 600 : 500,
+        }}
+      >
+        {children}
+      </Button>
+    </Link>
   )
 }

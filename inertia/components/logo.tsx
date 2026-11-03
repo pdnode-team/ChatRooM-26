@@ -1,35 +1,15 @@
-import { Avatar, Stack, Typography } from '@mui/material'
-import { MessageSquare } from 'lucide-react'
+import { Stack, Typography } from '@mui/material'
 import { Link } from '@adonisjs/inertia/react'
+import { urlFor } from '~/client'
 
-export default function Logo({ size = 32 }: { size?: number }) {
+export default function Logo() {
   return (
-    <Stack
-      component={Link}
-      route="home"
-      direction="row"
-      spacing={1.25}
-      alignItems="center"
-      aria-label="ChatRooM"
-      sx={{
-        color: 'inherit',
-        textDecoration: 'none',
-      }}
-    >
-      <Avatar
-        variant="rounded"
-        sx={{
-          width: size,
-          height: size,
-          bgcolor: 'primary.main',
-          color: 'primary.contrastText',
-        }}
-      >
-        <MessageSquare size={Math.round(size * 0.56)} />
-      </Avatar>
-      <Typography variant="h6" component="span" fontWeight={700} letterSpacing="-0.01em">
-        ChatRooM
-      </Typography>
-    </Stack>
+    <Link href={urlFor('home')} style={{ textDecoration: 'none', color: 'inherit' }}>
+      <Stack direction="row" spacing={1.25} aria-label="ChatRooM" sx={{ alignItems: 'center' }}>
+        <Typography variant="h6" component="span" sx={{ fontWeight: 700, letterSpacing: '-0.5px' }}>
+          Pdnode ChatRooM
+        </Typography>
+      </Stack>
+    </Link>
   )
 }

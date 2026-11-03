@@ -10,7 +10,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
       <AppBar position="static" color="default" elevation={1}>
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            <Logo size={34} />
+            <Logo />
             <ThemeToggle />
           </Toolbar>
         </Container>

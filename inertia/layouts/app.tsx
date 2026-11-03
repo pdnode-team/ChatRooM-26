@@ -15,7 +15,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       <AppBar position="sticky" color="default" elevation={2}>
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ gap: 3 }}>
-            <Logo size={34} />
+            <Logo />
 
             <Divider orientation="vertical" flexItem sx={{ my: 1.5 }} />
 

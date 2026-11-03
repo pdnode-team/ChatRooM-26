@@ -1,90 +1,78 @@
 import { urlFor } from '~/client'
 import { usePage } from '@inertiajs/react'
 import { Link } from '@adonisjs/inertia/react'
-import { MessageSquare, ShieldCheck, Users, Zap } from 'lucide-react'
+import { ShieldCheck, Users, Zap } from 'lucide-react'
 import MarketingLayout from '~/layouts/marketing'
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Chip,
-  Container,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Avatar, Box, Button, Card, CardContent, Container, Stack, Typography } from '@mui/material'
 
 const features = [
   {
     icon: Zap,
-    title: 'Real-Time Messaging',
-    description: 'Instant communication with low-latency message delivery and seamless updates.',
+    title: 'Open Source',
+    description: 'We love open source! Open source gives people freedom and transparency',
   },
   {
     icon: Users,
-    title: 'Team Channels',
-    description: 'Organize conversations by topic, project, or team in dedicated chat rooms.',
+    title: 'Material Design',
+    description:
+      "Which design is the best? We'll say it's Material Design! Pdnode ChatRoom fully uses Material Design (MUI); if not, please contact us!",
   },
   {
     icon: ShieldCheck,
-    title: 'Secure & Private',
-    description: 'Protected sessions and modern authentication keep your conversations safe.',
+    title: 'Easy to use',
+    description:
+      'We will try our best to improve the user experience and make it as easy as it can!',
   },
 ]
-
 export default function Home() {
   const { props } = usePage()
 
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
-      <Stack alignItems="center" textAlign="center" spacing={3} sx={{ maxWidth: 680, mx: 'auto', mb: 8 }}>
-        <Chip
-          icon={<MessageSquare size={15} />}
-          label="Material Design UI"
-          color="primary"
-          variant="outlined"
-        />
-
-        <Typography variant="h2" component="h1" fontWeight={800} sx={{ fontSize: { xs: '2.25rem', md: '3.25rem' } }}>
-          Connect and chat in real time with ChatRooM
+      <Stack
+        spacing={3}
+        sx={{
+          alignItems: 'center',
+          textAlign: 'center',
+          maxWidth: 680,
+          mx: 'auto',
+          mb: 8,
+        }}
+      >
+        <Typography
+          variant="h2"
+          component="h1"
+          sx={{
+            fontWeight: 800,
+            fontSize: { xs: '2.25rem', md: '3.25rem' },
+          }}
+        >
+          Pdnode ChatRooM
         </Typography>
 
-        <Typography variant="h6" color="text.secondary" fontWeight={400}>
+        <Typography variant="h6" color="text.secondary" sx={{ fontWeight: 400 }}>
           A clean, fast, and modern full-stack chat platform built with React and Material UI.
         </Typography>
 
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2} sx={{ pt: 1 }}>
           {props.user ? (
-            <Button
-              component={Link}
-              href={urlFor('dashboard')}
-              variant="contained"
-              size="large"
-              sx={{ px: 4 }}
-            >
-              Go to Dashboard
-            </Button>
+            <Link href={urlFor('dashboard')}>
+              <Button variant="contained" size="large" sx={{ px: 4 }}>
+                Go to Dashboard
+              </Button>
+            </Link>
           ) : (
             <>
-              <Button
-                component={Link}
-                href={urlFor('new_account.create')}
-                variant="contained"
-                size="large"
-                sx={{ px: 4 }}
-              >
-                Get Started
-              </Button>
-              <Button
-                component={Link}
-                href={urlFor('session.create')}
-                variant="outlined"
-                size="large"
-                sx={{ px: 4 }}
-              >
-                Sign In
-              </Button>
+              <Link href={urlFor('new_account.create')}>
+                <Button variant="contained" size="large" sx={{ px: 4 }}>
+                  Get Started
+                </Button>
+              </Link>
+              <Link href={urlFor('session.create')}>
+                <Button variant="outlined" size="large" sx={{ px: 4 }}>
+                  Sign In
+                </Button>
+              </Link>
             </>
           )}
         </Stack>
@@ -111,10 +99,10 @@ export default function Home() {
               >
                 <Icon size={24} />
               </Avatar>
-              <Typography variant="h6" component="h2" fontWeight={700} gutterBottom>
+              <Typography variant="h6" component="h2" gutterBottom sx={{ fontWeight: 700 }}>
                 {title}
               </Typography>
-              <Typography variant="body2" color="text.secondary" lineHeight={1.6}>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
                 {description}
               </Typography>
             </CardContent>

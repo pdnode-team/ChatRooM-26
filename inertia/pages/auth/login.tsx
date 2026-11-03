@@ -2,16 +2,26 @@ import AuthLayout from '~/layouts/auth'
 import { urlFor } from '~/client'
 import { Lock } from 'lucide-react'
 import { Form, Link } from '@adonisjs/inertia/react'
-import { Avatar, Button, Divider, Link as MuiLink, Stack, TextField, Typography } from '@mui/material'
+import {
+  Avatar,
+  Button,
+  Divider,
+  Link as MuiLink,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material'
 
 export default function Login() {
   return (
     <Stack spacing={3}>
-      <Stack alignItems="center" spacing={1} textAlign="center">
-        <Avatar sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', width: 48, height: 48 }}>
+      <Stack spacing={1} sx={{ textAlign: 'center', alignItems: 'center' }}>
+        <Avatar
+          sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', width: 48, height: 48 }}
+        >
           <Lock size={22} />
         </Avatar>
-        <Typography variant="h5" component="h1" fontWeight={700}>
+        <Typography variant="h5" component="h1" sx={{ fontWeight: 700 }}>
           Welcome back
         </Typography>
         <Typography variant="body2" color="text.secondary">
@@ -45,13 +55,7 @@ export default function Login() {
               helperText={errors.password}
             />
 
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              fullWidth
-              disabled={processing}
-            >
+            <Button type="submit" variant="contained" size="large" fullWidth disabled={processing}>
               {processing ? 'One moment…' : 'Sign in'}
             </Button>
           </Stack>
@@ -60,16 +64,16 @@ export default function Login() {
 
       <Divider />
 
-      <Typography variant="body2" color="text.secondary" textAlign="center">
+      <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
         New here?{' '}
-        <MuiLink
-          component={Link}
+        <Link
           href={urlFor('new_account.create')}
-          underline="hover"
-          fontWeight={600}
+          style={{ textDecoration: 'none', color: 'inherit' }}
         >
-          Create an account
-        </MuiLink>
+          <MuiLink underline="hover" sx={{ fontWeight: 600 }}>
+            Create an account
+          </MuiLink>
+        </Link>
       </Typography>
     </Stack>
   )

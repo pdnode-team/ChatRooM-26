@@ -16,7 +16,7 @@ export default function ServerError() {
         py: 8,
       }}
     >
-      <Card elevation={3} sx={{ width: '100%', textAlign: 'center' }}>
+      <Card sx={{ width: '100%', textAlign: 'center' }}>
         <CardContent sx={{ p: { xs: 4, sm: 5 } }}>
           <Stack alignItems="center" spacing={2}>
             <Avatar sx={{ width: 64, height: 64, bgcolor: 'error.main', color: 'error.contrastText' }}>

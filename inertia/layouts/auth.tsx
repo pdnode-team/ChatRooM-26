@@ -7,7 +7,7 @@ import { AppBar, Box, Card, CardContent, Container, Toolbar } from '@mui/materia
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <AppBar position="static" color="default" elevation={1}>
+      <AppBar position="static" color="default">
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
             <Logo />
@@ -27,7 +27,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
           py: 6,
         }}
       >
-        <Card elevation={4} sx={{ width: '100%', borderRadius: 3 }}>
+        <Card sx={{ width: '100%', borderRadius: 3 }}>
           <CardContent sx={{ p: { xs: 3, sm: 4 } }}>{children}</CardContent>
         </Card>
       </Container>

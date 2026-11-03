@@ -6,7 +6,7 @@ import { Avatar, Card, CardContent, Chip, Stack, Typography } from '@mui/materia
 export default function Dashboard() {
   return (
     <Page title="Dashboard" description="Overview of your workspace and chat rooms.">
-      <Card elevation={2} sx={{ my: 'auto' }}>
+      <Card sx={{ my: 'auto' }}>
         <CardContent sx={{ py: 8, px: 3 }}>
           <Stack
             alignItems="center"

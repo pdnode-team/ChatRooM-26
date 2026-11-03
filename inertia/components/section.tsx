@@ -13,7 +13,6 @@ export default function Section({
   return (
     <Card
       component="section"
-      elevation={1}
       sx={{
         '& + &': {
           mt: 3,

@@ -12,7 +12,7 @@ const nav: NavItem[] = [{ label: 'Dashboard', route: 'dashboard', icon: House }]
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <AppBar position="sticky" color="default" elevation={2}>
+      <AppBar position="sticky" color="default">
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ gap: 3 }}>
             <Logo />

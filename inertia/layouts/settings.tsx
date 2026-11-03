@@ -16,7 +16,7 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
           alignItems: 'start',
         }}
       >
-        <Paper component="nav" aria-label="Settings" elevation={2} sx={{ p: 1.5 }}>
+        <Paper component="nav" aria-label="Settings" sx={{ p: 1.5 }}>
           <Stack direction={{ xs: 'row', md: 'column' }} spacing={0.5} sx={{ overflowX: 'auto' }}>
             {items.map(({ label, route, icon: Icon }) => (
               <NavLink key={label} route={route} exact>
@@ -26,7 +26,7 @@ export default function SettingsLayout({ children }: { children: ReactNode }) {
             ))}
           </Stack>
         </Paper>
-        <Card elevation={2} sx={{ minWidth: 0 }}>
+        <Card sx={{ minWidth: 0 }}>
           <CardContent sx={{ p: { xs: 2.5, md: 3.5 } }}>{children}</CardContent>
         </Card>
       </Box>

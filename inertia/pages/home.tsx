@@ -1,24 +1,24 @@
 import { urlFor } from '~/client'
 import { usePage } from '@inertiajs/react'
 import { Link } from '@adonisjs/inertia/react'
-import { ShieldCheck, Users, Zap } from 'lucide-react'
+import { Gauge, Layers, Globe } from 'lucide-react'
 import MarketingLayout from '~/layouts/marketing'
 import { Avatar, Box, Button, Card, CardContent, Container, Stack, Typography } from '@mui/material'
 
 const features = [
   {
-    icon: Zap,
+    icon: Globe,
     title: 'Open Source',
     description: 'We love open source! Open source gives people freedom and transparency',
   },
   {
-    icon: Users,
+    icon: Layers,
     title: 'Material Design',
     description:
       "Which design is the best? We'll say it's Material Design! Pdnode ChatRoom fully uses Material Design (MUI); if not, please contact us!",
   },
   {
-    icon: ShieldCheck,
+    icon: Gauge,
     title: 'Easy to use',
     description:
       'We will try our best to improve the user experience and make it as easy as it can!',
@@ -86,7 +86,7 @@ export default function Home() {
         }}
       >
         {features.map(({ icon: Icon, title, description }) => (
-          <Card key={title} elevation={3} sx={{ height: '100%' }}>
+          <Card key={title} sx={{ height: '100%' }}>
             <CardContent sx={{ p: 3.5 }}>
               <Avatar
                 sx={{

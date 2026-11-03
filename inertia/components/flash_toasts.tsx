@@ -35,7 +35,6 @@ export default function FlashToasts() {
         onClose={() => setOpen(false)}
         severity={severity}
         variant="filled"
-        elevation={6}
         sx={{ width: '100%' }}
       >
         {message}

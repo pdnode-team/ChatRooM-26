@@ -10,7 +10,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
   const { props } = usePage()
   return (
     <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <AppBar position="sticky" color="default" elevation={2}>
+      <AppBar position="sticky" color="default">
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
             <Logo />

@@ -19,7 +19,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
               {props.user ? (
                 <Link href={urlFor('dashboard')}>
                   <Button variant="contained" color="primary">
-                    Dashboard
+                    Go to Chat
                   </Button>
                 </Link>
               ) : (

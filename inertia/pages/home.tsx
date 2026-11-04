@@ -58,7 +58,7 @@ export default function Home() {
           {props.user ? (
             <Link href={urlFor('dashboard')}>
               <Button variant="contained" size="large" sx={{ px: 4 }}>
-                Go to Dashboard
+                Go to Chat
               </Button>
             </Link>
           ) : (

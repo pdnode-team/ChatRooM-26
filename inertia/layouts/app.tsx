@@ -1,13 +1,13 @@
 import Logo from '~/components/logo'
 import { type ReactNode } from 'react'
-import { House, LogOut } from 'lucide-react'
+import { MessageCircle, LogOut } from 'lucide-react'
 import { Form } from '@adonisjs/inertia/react'
 import FlashToasts from '~/components/flash_toasts'
 import ThemeToggle from '~/components/theme_toggle'
 import NavLink, { type NavItem } from '~/components/nav_link'
 import { AppBar, Box, Button, Container, Divider, Stack, Toolbar } from '@mui/material'
 
-const nav: NavItem[] = [{ label: 'Dashboard', route: 'dashboard', icon: House }]
+const nav: NavItem[] = [{ label: 'Go to Chat', route: 'dashboard', icon: MessageCircle }]
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (

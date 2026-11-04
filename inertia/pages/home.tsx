@@ -1,10 +1,9 @@
 import { urlFor } from '~/client'
 import { usePage } from '@inertiajs/react'
 import { Link } from '@adonisjs/inertia/react'
-import { Gauge, Layers, Globe } from 'lucide-react'
+import { Gauge, Globe } from 'lucide-react'
 import MarketingLayout from '~/layouts/marketing'
 import {
-  Badge,
   Button,
   Card,
   Container,

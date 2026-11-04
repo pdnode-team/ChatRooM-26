@@ -5,7 +5,7 @@ import { MessageCircle } from 'lucide-react'
 
 export default function Chat() {
   return (
-    <Page title="Chat" description="Overview of your workspace and chat rooms.">
+    <Page title="Home" description="Overview of your spaces and chat rooms.">
       <Card withBorder radius="md" padding="xl" my="auto">
         <Stack align="center" justify="center" gap="sm" ta="center" maw={460} mx="auto" py="xl">
           <ThemeIcon size={64} radius="xl" variant="light">

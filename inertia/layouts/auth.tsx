@@ -1,7 +1,6 @@
 import Logo from '~/components/logo'
 import { type ReactNode } from 'react'
 import FlashToasts from '~/components/flash_toasts'
-import ThemeToggle from '~/components/theme_toggle'
 import { Box, Container, Group, Paper } from '@mantine/core'
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
@@ -16,7 +15,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         <Container size="lg" h={60}>
           <Group h="100%" justify="space-between">
             <Logo />
-            <ThemeToggle />
           </Group>
         </Container>
       </Paper>

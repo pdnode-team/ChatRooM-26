@@ -1,7 +1,7 @@
 import { urlFor } from '~/client'
 import { usePage } from '@inertiajs/react'
 import { Link } from '@adonisjs/inertia/react'
-import { Gauge, Globe } from 'lucide-react'
+import { Gauge, Globe, MessagesCircle } from 'lucide-react'
 import MarketingLayout from '~/layouts/marketing'
 import {
   Button,
@@ -21,12 +21,12 @@ const features = [
     title: 'Open Source',
     description: 'We love open source! Open source gives people freedom and transparency',
   },
-  // {
-  //   icon: Layers,
-  //   title: 'Mantine UI Design',
-  //   description:
-  //     'Clean, accessible, and customizable components powered by Mantine UI with seamless dark and light mode support.',
-  // },
+  {
+    icon: MessagesCircle,
+    title: 'Value Your Feedback',
+    description:
+      'We really like to hear your feedback! Your feedback are important to us, sent email about your feedback! chatroom-feedback@pdnode.com',
+  },
   {
     icon: Gauge,
     title: 'Easy to use',

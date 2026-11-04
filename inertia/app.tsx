@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client'
 import { TuyauProvider } from '@adonisjs/inertia/react'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp, type ResolvedComponent } from '@inertiajs/react'
-import { AppThemeProvider } from './components/theme_toggle'
+import { AppThemeProvider } from './components/theme'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Pdnode ChatRooM'
 
@@ -18,16 +18,15 @@ createInertiaApp({
     return page.default
   },
   setup({ el, App, props }) {
-    const initialTheme = (props.initialPage.props as any)?.preferences?.theme ?? 'light'
     createRoot(el).render(
       <TuyauProvider client={client}>
-        <AppThemeProvider initialTheme={initialTheme}>
+        <AppThemeProvider>
           <App {...props} />
         </AppThemeProvider>
       </TuyauProvider>
     )
   },
   progress: {
-    color: '#4B5563',
+    color: '#718355',
   },
 })

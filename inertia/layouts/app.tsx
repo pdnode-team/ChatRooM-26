@@ -3,7 +3,6 @@ import { type ReactNode } from 'react'
 import { MessageCircle, LogOut } from 'lucide-react'
 import { Form } from '@adonisjs/inertia/react'
 import FlashToasts from '~/components/flash_toasts'
-import ThemeToggle from '~/components/theme_toggle'
 import NavLink, { type NavItem } from '~/components/nav_link'
 import { Box, Button, Container, Divider, Group, Paper } from '@mantine/core'
 
@@ -41,7 +40,6 @@ export default function AppLayout({ children }: { children: ReactNode }) {
             </Group>
 
             <Group gap="sm">
-              <ThemeToggle />
               <Form route="session.destroy">
                 <Button
                   type="submit"

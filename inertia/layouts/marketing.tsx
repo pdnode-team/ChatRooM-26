@@ -3,7 +3,6 @@ import { type ReactNode } from 'react'
 import { usePage } from '@inertiajs/react'
 import { Link } from '@adonisjs/inertia/react'
 import FlashToasts from '~/components/flash_toasts'
-import ThemeToggle from '~/components/theme_toggle'
 import { Box, Button, Container, Group, Paper } from '@mantine/core'
 import Logo from '~/components/logo'
 
@@ -29,7 +28,6 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
           <Group h="100%" justify="space-between">
             <Logo />
             <Group gap="sm">
-              <ThemeToggle />
               {props.user ? (
                 <Link href={urlFor('dashboard')} style={{ textDecoration: 'none' }}>
                   <Button variant="filled">Go to Chat</Button>

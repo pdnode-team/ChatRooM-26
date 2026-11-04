@@ -1,6 +1,5 @@
 import AuthLayout from '~/layouts/auth'
 import { urlFor } from '~/client'
-import { Lock } from 'lucide-react'
 import { Form, Link } from '@adonisjs/inertia/react'
 import { useForm } from '@mantine/form'
 import {
@@ -11,7 +10,6 @@ import {
   Stack,
   Text,
   TextInput,
-  ThemeIcon,
   Title,
 } from '@mantine/core'
 
@@ -27,9 +25,6 @@ export default function Login() {
   return (
     <Stack gap="lg">
       <Stack gap={6} align="center" ta="center">
-        <ThemeIcon size={48} radius="xl" variant="light">
-          <Lock size={22} />
-        </ThemeIcon>
         <Title order={2} fw={700}>
           Welcome back
         </Title>

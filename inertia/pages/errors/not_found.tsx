@@ -2,38 +2,41 @@ import { urlFor } from '~/client'
 import { Link } from '@adonisjs/inertia/react'
 import { FileQuestion } from 'lucide-react'
 import MarketingLayout from '~/layouts/marketing'
-import { Avatar, Button, Card, CardContent, Chip, Container, Stack, Typography } from '@mui/material'
+import { Badge, Button, Card, Container, Stack, Text, ThemeIcon, Title } from '@mantine/core'
 
 export default function NotFound() {
   return (
     <Container
-      maxWidth="sm"
-      sx={{
+      size="sm"
+      py={64}
+      style={{
         flex: 1,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        py: 8,
+        width: '100%',
       }}
     >
-      <Card sx={{ width: '100%', textAlign: 'center' }}>
-        <CardContent sx={{ p: { xs: 4, sm: 5 } }}>
-          <Stack alignItems="center" spacing={2}>
-            <Avatar sx={{ width: 64, height: 64, bgcolor: 'warning.main', color: 'warning.contrastText' }}>
-              <FileQuestion size={32} />
-            </Avatar>
-            <Chip label="Error 404" color="warning" size="small" />
-            <Typography variant="h4" component="h1" fontWeight={700}>
-              Page Not Found
-            </Typography>
-            <Typography variant="body1" color="text.secondary">
-              The page you tried to reach doesn&apos;t exist. Check the URL or head back home.
-            </Typography>
-            <Button component={Link} href={urlFor('home')} variant="contained" sx={{ mt: 1 }}>
+      <Card withBorder shadow="sm" radius="md" padding="xl" w="100%" ta="center">
+        <Stack align="center" gap="md" py="md">
+          <ThemeIcon size={64} radius="xl" color="yellow" variant="light">
+            <FileQuestion size={32} />
+          </ThemeIcon>
+          <Badge color="yellow" variant="light" size="md">
+            Error 404
+          </Badge>
+          <Title order={2} fw={700}>
+            Page Not Found
+          </Title>
+          <Text c="dimmed" maw={420}>
+            The page you tried to reach doesn&apos;t exist. Check the URL or head back home.
+          </Text>
+          <Link href={urlFor('home')} style={{ textDecoration: 'none' }}>
+            <Button variant="filled" mt="xs">
               Back to Home
             </Button>
-          </Stack>
-        </CardContent>
+          </Link>
+        </Stack>
       </Card>
     </Container>
   )

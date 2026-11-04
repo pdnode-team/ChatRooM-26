@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react'
 import { Head } from '@inertiajs/react'
-import { Box, Container, Divider, Stack, Typography } from '@mui/material'
+import { Box, Container, Divider, Group, Stack, Text, Title } from '@mantine/core'
 
 export default function Page({
   title,
@@ -19,39 +19,29 @@ export default function Page({
 
   return (
     <Container
-      maxWidth="lg"
-      sx={{ py: { xs: 3, md: 4 }, flex: 1, display: 'flex', flexDirection: 'column' }}
+      size="lg"
+      py={{ base: 'lg', md: 'xl' }}
+      style={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%' }}
     >
       <Head title={title} />
       {hasHeader && (
-        <Box component="header" sx={{ mb: 3 }}>
-          <Stack
-            direction={{ xs: 'column', sm: 'row' }}
-            spacing={2}
-            sx={{
-              justifyContent: 'space-between',
-              alignItems: { xs: 'flex-start', sm: 'center' },
-            }}
-          >
-            <Box>
+        <Box component="header" mb="lg">
+          <Group justify="space-between" align="center" wrap="wrap" gap="md">
+            <Stack gap={4}>
               {!hideTitle && (
-                <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
+                <Title order={2} fw={700}>
                   {title}
-                </Typography>
+                </Title>
               )}
               {description && (
-                <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
+                <Text c="dimmed" size="md">
                   {description}
-                </Typography>
+                </Text>
               )}
-            </Box>
-            {actions && (
-              <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
-                {actions}
-              </Stack>
-            )}
-          </Stack>
-          <Divider sx={{ mt: 2.5 }} />
+            </Stack>
+            {actions && <Group gap="sm">{actions}</Group>}
+          </Group>
+          <Divider mt="md" />
         </Box>
       )}
       {children}

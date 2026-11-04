@@ -5,48 +5,60 @@ import { Form } from '@adonisjs/inertia/react'
 import FlashToasts from '~/components/flash_toasts'
 import ThemeToggle from '~/components/theme_toggle'
 import NavLink, { type NavItem } from '~/components/nav_link'
-import { AppBar, Box, Button, Container, Divider, Stack, Toolbar } from '@mui/material'
+import { Box, Button, Container, Divider, Group, Paper } from '@mantine/core'
 
 const nav: NavItem[] = [{ label: 'Go to Chat', route: 'dashboard', icon: MessageCircle }]
 
 export default function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <AppBar position="sticky" color="default">
-        <Container maxWidth="lg">
-          <Toolbar disableGutters sx={{ gap: 3 }}>
-            <Logo />
+    <Box style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Paper
+        component="header"
+        radius={0}
+        withBorder
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          borderTop: 0,
+          borderLeft: 0,
+          borderRight: 0,
+        }}
+      >
+        <Container size="lg" h={60}>
+          <Group h="100%" justify="space-between" gap="md">
+            <Group gap="md">
+              <Logo />
+              <Divider orientation="vertical" />
+              <Group component="nav" gap="xs">
+                {nav.map(({ label, route, icon: Icon }) => (
+                  <NavLink key={label} route={route}>
+                    {Icon && <Icon size={16} />}
+                    {label}
+                  </NavLink>
+                ))}
+              </Group>
+            </Group>
 
-            <Divider orientation="vertical" flexItem sx={{ my: 1.5 }} />
-
-            <Stack component="nav" direction="row" spacing={1} sx={{ flexGrow: 1 }}>
-              {nav.map(({ label, route, icon: Icon }) => (
-                <NavLink key={label} route={route}>
-                  {Icon && <Icon size={16} />}
-                  {label}
-                </NavLink>
-              ))}
-            </Stack>
-
-            <Stack direction="row" spacing={1.5} sx={{ alignItems: 'center' }}>
+            <Group gap="sm">
               <ThemeToggle />
               <Form route="session.destroy">
                 <Button
                   type="submit"
-                  variant="outlined"
-                  color="error"
-                  size="small"
-                  startIcon={<LogOut size={16} />}
+                  variant="light"
+                  color="red"
+                  size="sm"
+                  leftSection={<LogOut size={16} />}
                 >
                   Log out
                 </Button>
               </Form>
-            </Stack>
-          </Toolbar>
+            </Group>
+          </Group>
         </Container>
-      </AppBar>
+      </Paper>
 
-      <Box component="main" sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <Box component="main" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         {children}
       </Box>
       <FlashToasts />

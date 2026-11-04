@@ -2,83 +2,97 @@ import AuthLayout from '~/layouts/auth'
 import { urlFor } from '~/client'
 import { UserPlus } from 'lucide-react'
 import { Form, Link } from '@adonisjs/inertia/react'
+import { useForm } from '@mantine/form'
 import {
-  Avatar,
+  Anchor,
   Button,
   Divider,
-  Link as MuiLink,
+  PasswordInput,
   Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
+  Text,
+  TextInput,
+  ThemeIcon,
+  Title,
+} from '@mantine/core'
 
 export default function Signup() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      fullName: '',
+      email: '',
+      password: '',
+      passwordConfirmation: '',
+    },
+  })
+
   return (
-    <Stack spacing={3}>
-      <Stack spacing={1} sx={{ textAlign: 'center', alignItems: 'center' }}>
-        <Avatar
-          sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', width: 48, height: 48 }}
-        >
+    <Stack gap="lg">
+      <Stack gap={6} align="center" ta="center">
+        <ThemeIcon size={48} radius="xl" variant="light">
           <UserPlus size={22} />
-        </Avatar>
-        <Typography variant="h5" component="h1" sx={{ fontWeight: 700 }}>
+        </ThemeIcon>
+        <Title order={2} fw={700}>
           Create your account
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
+        </Title>
+        <Text size="sm" c="dimmed">
           Join ChatRooM to start chatting
-        </Typography>
+        </Text>
       </Stack>
 
       <Form route="new_account.store">
         {({ errors, processing }) => (
-          <Stack spacing={2.5}>
-            <TextField
+          <Stack gap="md">
+            <TextInput
+              key={form.key('fullName')}
+              {...form.getInputProps('fullName')}
               id="fullName"
               name="fullName"
               type="text"
               label="Full name"
               autoComplete="name"
               placeholder="Ada Lovelace"
-              fullWidth
-              error={Boolean(errors.fullName)}
-              helperText={errors.fullName}
+              error={errors.fullName}
             />
 
-            <TextField
+            <TextInput
+              key={form.key('email')}
+              {...form.getInputProps('email')}
               id="email"
               name="email"
               type="email"
               label="Email Address"
               autoComplete="email"
               placeholder="you@example.com"
-              fullWidth
-              error={Boolean(errors.email)}
-              helperText={errors.email}
+              required
+              error={errors.email}
             />
 
-            <TextField
+            <PasswordInput
+              key={form.key('password')}
+              {...form.getInputProps('password')}
               id="password"
               name="password"
-              type="password"
               label="Password"
+              placeholder="Create a password"
               autoComplete="new-password"
-              fullWidth
-              error={Boolean(errors.password)}
-              helperText={errors.password}
+              required
+              error={errors.password}
             />
 
-            <TextField
+            <PasswordInput
+              key={form.key('passwordConfirmation')}
+              {...form.getInputProps('passwordConfirmation')}
               id="passwordConfirmation"
               name="passwordConfirmation"
-              type="password"
               label="Confirm password"
+              placeholder="Repeat your password"
               autoComplete="new-password"
-              fullWidth
-              error={Boolean(errors.passwordConfirmation)}
-              helperText={errors.passwordConfirmation}
+              required
+              error={errors.passwordConfirmation}
             />
 
-            <Button type="submit" variant="contained" size="large" fullWidth disabled={processing}>
+            <Button type="submit" size="md" fullWidth loading={processing} mt="xs">
               {processing ? 'One moment…' : 'Create account'}
             </Button>
           </Stack>
@@ -87,14 +101,14 @@ export default function Signup() {
 
       <Divider />
 
-      <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
+      <Text size="sm" c="dimmed" ta="center">
         Already have an account?{' '}
-        <Link href={urlFor('session.create')} style={{ textDecoration: 'none', color: 'inherit' }}>
-          <MuiLink underline="hover" sx={{ fontWeight: 600 }}>
+        <Link href={urlFor('session.create')} style={{ textDecoration: 'none' }}>
+          <Anchor component="span" fw={600} size="sm">
             Sign in
-          </MuiLink>
+          </Anchor>
         </Link>
-      </Typography>
+      </Text>
     </Stack>
   )
 }

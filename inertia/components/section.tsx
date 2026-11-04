@@ -1,5 +1,5 @@
 import { type ReactNode } from 'react'
-import { Card, CardContent, CardHeader, Divider, Stack } from '@mui/material'
+import { Card, Divider, Stack, Text, Title } from '@mantine/core'
 
 export default function Section({
   title,
@@ -11,30 +11,31 @@ export default function Section({
   children: ReactNode
 }) {
   return (
-    <Card
-      component="section"
-      sx={{
-        '& + &': {
-          mt: 3,
-        },
-      }}
-    >
+    <Card component="section" withBorder radius="md" padding="lg" mb="lg">
       {(title || description) && (
         <>
-          <CardHeader
-            title={title}
-            subheader={description}
-            slotProps={{
-              title: { variant: 'h6', fontWeight: 600 },
-              subheader: { variant: 'body2' },
-            }}
-          />
-          <Divider />
+          <Card.Section inheritPadding py="md">
+            <Stack gap={4}>
+              {title && (
+                <Title order={4} fw={600}>
+                  {title}
+                </Title>
+              )}
+              {description && (
+                <Text size="sm" c="dimmed">
+                  {description}
+                </Text>
+              )}
+            </Stack>
+          </Card.Section>
+          <Card.Section>
+            <Divider />
+          </Card.Section>
         </>
       )}
-      <CardContent>
-        <Stack spacing={2.5}>{children}</Stack>
-      </CardContent>
+      <Stack gap="md" pt={title || description ? 'md' : 0}>
+        {children}
+      </Stack>
     </Card>
   )
 }

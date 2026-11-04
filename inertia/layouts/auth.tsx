@@ -2,34 +2,40 @@ import Logo from '~/components/logo'
 import { type ReactNode } from 'react'
 import FlashToasts from '~/components/flash_toasts'
 import ThemeToggle from '~/components/theme_toggle'
-import { AppBar, Box, Card, CardContent, Container, Toolbar } from '@mui/material'
+import { Box, Container, Group, Paper } from '@mantine/core'
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <AppBar position="static" color="default">
-        <Container maxWidth="lg">
-          <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+    <Box style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <Paper
+        component="header"
+        radius={0}
+        withBorder
+        style={{ borderTop: 0, borderLeft: 0, borderRight: 0 }}
+      >
+        <Container size="lg" h={60}>
+          <Group h="100%" justify="space-between">
             <Logo />
             <ThemeToggle />
-          </Toolbar>
+          </Group>
         </Container>
-      </AppBar>
+      </Paper>
 
       <Container
         component="main"
-        maxWidth="xs"
-        sx={{
+        size={420}
+        py="xl"
+        style={{
           flex: 1,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          py: 6,
+          width: '100%',
         }}
       >
-        <Card sx={{ width: '100%', borderRadius: 3 }}>
-          <CardContent sx={{ p: { xs: 3, sm: 4 } }}>{children}</CardContent>
-        </Card>
+        <Paper withBorder shadow="sm" p={30} radius="md" w="100%">
+          {children}
+        </Paper>
       </Container>
       <FlashToasts />
     </Box>

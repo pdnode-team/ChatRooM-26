@@ -1,19 +1,62 @@
-import { createContext, useContext, useMemo, useState, type ReactNode } from 'react'
+import { useMemo, type ReactNode } from 'react'
 import { Moon, Sun } from 'lucide-react'
-import { usePage } from '@inertiajs/react'
-import { CssBaseline, IconButton, ThemeProvider, Tooltip, createTheme } from '@mui/material'
+import {
+  ActionIcon,
+  MantineProvider,
+  Tooltip,
+  createTheme,
+  useComputedColorScheme,
+  useMantineColorScheme,
+  type MantineColorScheme,
+  type MantineColorSchemeManager,
+} from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 
 const COOKIE = 'app_theme'
 const ONE_YEAR = 60 * 60 * 24 * 365
 
 type ThemeMode = 'light' | 'dark'
 
-interface ThemeModeContextValue {
-  mode: ThemeMode
-  toggleTheme: () => void
-}
+const theme = createTheme({
+  primaryColor: 'blue',
+  defaultRadius: 'md',
+})
 
-const ThemeModeContext = createContext<ThemeModeContextValue | null>(null)
+function createCookieColorSchemeManager(): MantineColorSchemeManager {
+  return {
+    get: (defaultValue) => {
+      if (typeof document === 'undefined') {
+        return defaultValue
+      }
+      const attr = document.documentElement.getAttribute('data-theme')
+      if (attr === 'light' || attr === 'dark') {
+        return attr
+      }
+      const match = document.cookie
+        .split('; ')
+        .find((row) => row.startsWith(`${COOKIE}=`))
+        ?.split('=')[1]
+      if (match === 'light' || match === 'dark' || match === 'auto') {
+        return match as MantineColorScheme
+      }
+      return defaultValue
+    },
+    set: (value) => {
+      if (typeof document !== 'undefined') {
+        const resolved = value === 'dark' ? 'dark' : 'light'
+        document.documentElement.setAttribute('data-theme', resolved)
+        document.cookie = `${COOKIE}=${resolved}; path=/; max-age=${ONE_YEAR}; samesite=lax`
+      }
+    },
+    subscribe: () => {},
+    unsubscribe: () => {},
+    clear: () => {
+      if (typeof document !== 'undefined') {
+        document.cookie = `${COOKIE}=; path=/; max-age=0; samesite=lax`
+      }
+    },
+  }
+}
 
 export function AppThemeProvider({
   initialTheme = 'light',
@@ -22,89 +65,35 @@ export function AppThemeProvider({
   initialTheme?: ThemeMode
   children: ReactNode
 }) {
-  const [mode, setMode] = useState<ThemeMode>(() => {
-    if (typeof document !== 'undefined') {
-      const attr = document.documentElement.getAttribute('data-theme')
-      if (attr === 'dark' || attr === 'light') return attr
-    }
-    return initialTheme
-  })
-
-  const toggleTheme = () => {
-    setMode((prev) => {
-      const next: ThemeMode = prev === 'dark' ? 'light' : 'dark'
-      if (typeof document !== 'undefined') {
-        document.documentElement.setAttribute('data-theme', next)
-        document.cookie = `${COOKIE}=${next}; path=/; max-age=${ONE_YEAR}; samesite=lax`
-      }
-      return next
-    })
-  }
-
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-          ...(mode === 'light'
-            ? {
-                background: {
-                  default: '#f5f7fa',
-                  paper: '#ffffff',
-                },
-              }
-            : {
-                background: {
-                  default: '#121212',
-                  paper: '#1e1e1e',
-                },
-              }),
-        },
-        shape: {
-          borderRadius: 8,
-        },
-      }),
-    [mode]
-  )
+  const colorSchemeManager = useMemo(() => createCookieColorSchemeManager(), [])
 
   return (
-    <ThemeModeContext.Provider value={{ mode, toggleTheme }}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </ThemeModeContext.Provider>
+    <MantineProvider
+      theme={theme}
+      defaultColorScheme={initialTheme}
+      colorSchemeManager={colorSchemeManager}
+    >
+      <Notifications position="top-center" />
+      {children}
+    </MantineProvider>
   )
 }
 
 export default function ThemeToggle() {
-  const ctx = useContext(ThemeModeContext)
-  const page = usePage()
-  const [fallbackTheme, setFallbackTheme] = useState<ThemeMode>(
-    page.props.preferences?.theme ?? 'light'
-  )
-
-  const mode = ctx ? ctx.mode : fallbackTheme
-
-  const handleToggle = () => {
-    if (ctx) {
-      ctx.toggleTheme()
-    } else {
-      const next: ThemeMode = fallbackTheme === 'dark' ? 'light' : 'dark'
-      setFallbackTheme(next)
-      document.documentElement.setAttribute('data-theme', next)
-      document.cookie = `${COOKIE}=${next}; path=/; max-age=${ONE_YEAR}; samesite=lax`
-    }
-  }
-
-  const isDark = mode === 'dark'
+  const { setColorScheme } = useMantineColorScheme()
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true })
+  const isDark = computedColorScheme === 'dark'
   const label = isDark ? 'Switch to light theme' : 'Switch to dark theme'
 
+  const handleToggle = () => {
+    setColorScheme(isDark ? 'light' : 'dark')
+  }
+
   return (
-    <Tooltip title={label}>
-      <IconButton onClick={handleToggle} aria-label={label} color="inherit">
-        {isDark ? <Sun size={20} /> : <Moon size={20} />}
-      </IconButton>
+    <Tooltip label={label}>
+      <ActionIcon onClick={handleToggle} variant="default" size="lg" radius="md" aria-label={label}>
+        {isDark ? <Sun size={18} /> : <Moon size={18} />}
+      </ActionIcon>
     </Tooltip>
   )
 }

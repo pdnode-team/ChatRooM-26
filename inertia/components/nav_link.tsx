@@ -3,7 +3,7 @@ import { usePage } from '@inertiajs/react'
 import { type LucideIcon } from 'lucide-react'
 import { type ReactNode } from 'react'
 import { Link } from '@adonisjs/inertia/react'
-import { Button } from '@mui/material'
+import { Button } from '@mantine/core'
 
 export type NavRoute = Parameters<typeof urlFor>[0]
 
@@ -30,25 +30,17 @@ export default function NavLink({
   const isActive = exact ? path === href : path === href || path.startsWith(`${href}/`)
 
   return (
-    <Link href={href}>
+    <Link href={href} style={{ textDecoration: 'none' }}>
       <Button
         className={className}
         aria-current={isActive ? 'page' : undefined}
-        variant={isActive ? ('tonal' in Button ? 'contained' : 'contained') : 'text'}
-        color={isActive ? 'primary' : 'inherit'}
-        size="small"
-        sx={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          justifyContent: 'flex-start',
-          gap: 1,
-          px: 2,
-          py: 0.75,
-          textTransform: 'none',
-          fontWeight: isActive ? 600 : 500,
-        }}
+        variant={isActive ? 'light' : 'subtle'}
+        color={isActive ? 'blue' : 'gray'}
+        size="sm"
+        justify="flex-start"
+        fw={isActive ? 600 : 500}
       >
-        {children}
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>{children}</span>
       </Button>
     </Link>
   )

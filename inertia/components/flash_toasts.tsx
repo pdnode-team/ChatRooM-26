@@ -1,44 +1,36 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { router, usePage } from '@inertiajs/react'
-import { Alert, Snackbar } from '@mui/material'
+import { notifications } from '@mantine/notifications'
+import { AlertCircle, CheckCircle2 } from 'lucide-react'
 
 export default function FlashToasts() {
   const { flash } = usePage()
-  const [open, setOpen] = useState(false)
-  const [message, setMessage] = useState<string>('')
-  const [severity, setSeverity] = useState<'success' | 'error'>('success')
 
   useEffect(() => {
-    return router.on('start', () => setOpen(false))
+    return router.on('start', () => {
+      notifications.clean()
+    })
   }, [])
 
   useEffect(() => {
     if (flash.error) {
-      setMessage(flash.error)
-      setSeverity('error')
-      setOpen(true)
+      notifications.show({
+        color: 'red',
+        title: 'Error',
+        message: flash.error,
+        icon: <AlertCircle size={18} />,
+        autoClose: 4000,
+      })
     } else if (flash.success) {
-      setMessage(flash.success)
-      setSeverity('success')
-      setOpen(true)
+      notifications.show({
+        color: 'teal',
+        title: 'Success',
+        message: flash.success,
+        icon: <CheckCircle2 size={18} />,
+        autoClose: 4000,
+      })
     }
   }, [flash])
 
-  return (
-    <Snackbar
-      open={open}
-      autoHideDuration={4000}
-      onClose={() => setOpen(false)}
-      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-    >
-      <Alert
-        onClose={() => setOpen(false)}
-        severity={severity}
-        variant="filled"
-        sx={{ width: '100%' }}
-      >
-        {message}
-      </Alert>
-    </Snackbar>
-  )
+  return null
 }

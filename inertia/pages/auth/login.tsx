@@ -2,60 +2,71 @@ import AuthLayout from '~/layouts/auth'
 import { urlFor } from '~/client'
 import { Lock } from 'lucide-react'
 import { Form, Link } from '@adonisjs/inertia/react'
+import { useForm } from '@mantine/form'
 import {
-  Avatar,
+  Anchor,
   Button,
   Divider,
-  Link as MuiLink,
+  PasswordInput,
   Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
+  Text,
+  TextInput,
+  ThemeIcon,
+  Title,
+} from '@mantine/core'
 
 export default function Login() {
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
+      password: '',
+    },
+  })
+
   return (
-    <Stack spacing={3}>
-      <Stack spacing={1} sx={{ textAlign: 'center', alignItems: 'center' }}>
-        <Avatar
-          sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', width: 48, height: 48 }}
-        >
+    <Stack gap="lg">
+      <Stack gap={6} align="center" ta="center">
+        <ThemeIcon size={48} radius="xl" variant="light">
           <Lock size={22} />
-        </Avatar>
-        <Typography variant="h5" component="h1" sx={{ fontWeight: 700 }}>
+        </ThemeIcon>
+        <Title order={2} fw={700}>
           Welcome back
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
+        </Title>
+        <Text size="sm" c="dimmed">
           Sign in to continue to ChatRooM
-        </Typography>
+        </Text>
       </Stack>
 
       <Form route="session.store">
         {({ errors, processing }) => (
-          <Stack spacing={2.5}>
-            <TextField
+          <Stack gap="md">
+            <TextInput
+              key={form.key('email')}
+              {...form.getInputProps('email')}
               id="email"
               name="email"
               type="email"
               label="Email Address"
               autoComplete="username"
               placeholder="you@example.com"
-              fullWidth
-              error={Boolean(errors.email)}
-              helperText={errors.email}
+              required
+              error={errors.email}
             />
 
-            <TextField
+            <PasswordInput
+              key={form.key('password')}
+              {...form.getInputProps('password')}
               id="password"
               name="password"
-              type="password"
               label="Password"
+              placeholder="Your password"
               autoComplete="current-password"
-              fullWidth
-              error={Boolean(errors.password)}
-              helperText={errors.password}
+              required
+              error={errors.password}
             />
 
-            <Button type="submit" variant="contained" size="large" fullWidth disabled={processing}>
+            <Button type="submit" size="md" fullWidth loading={processing} mt="xs">
               {processing ? 'One moment…' : 'Sign in'}
             </Button>
           </Stack>
@@ -64,17 +75,14 @@ export default function Login() {
 
       <Divider />
 
-      <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
+      <Text size="sm" c="dimmed" ta="center">
         New here?{' '}
-        <Link
-          href={urlFor('new_account.create')}
-          style={{ textDecoration: 'none', color: 'inherit' }}
-        >
-          <MuiLink underline="hover" sx={{ fontWeight: 600 }}>
+        <Link href={urlFor('new_account.create')} style={{ textDecoration: 'none' }}>
+          <Anchor component="span" fw={600} size="sm">
             Create an account
-          </MuiLink>
+          </Anchor>
         </Link>
-      </Typography>
+      </Text>
     </Stack>
   )
 }

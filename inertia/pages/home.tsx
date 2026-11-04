@@ -22,12 +22,12 @@ const features = [
     title: 'Open Source',
     description: 'We love open source! Open source gives people freedom and transparency',
   },
-  {
-    icon: Layers,
-    title: 'Mantine UI Design',
-    description:
-      'Clean, accessible, and customizable components powered by Mantine UI with seamless dark and light mode support.',
-  },
+  // {
+  //   icon: Layers,
+  //   title: 'Mantine UI Design',
+  //   description:
+  //     'Clean, accessible, and customizable components powered by Mantine UI with seamless dark and light mode support.',
+  // },
   {
     icon: Gauge,
     title: 'Easy to use',
@@ -42,10 +42,6 @@ export default function Home() {
   return (
     <Container size="lg" py={{ base: 48, md: 80 }}>
       <Stack align="center" ta="center" maw={680} mx="auto" mb={64} gap="lg">
-        <Badge variant="light" size="lg" radius="xl">
-          Real-time Communication
-        </Badge>
-
         <Title
           order={1}
           fw={800}

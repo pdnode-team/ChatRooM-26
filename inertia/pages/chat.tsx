@@ -12,9 +12,9 @@ export default function Chat() {
             <MessageCircle size={30} />
           </ThemeIcon>
           <Title order={3} fw={700}>
-            Chat Rooms
+            Hmmm Empty?
           </Title>
-          <Text c="dimmed">Welcome to ChatRooM. Select or create a room to start chatting.</Text>
+          <Text c="dimmed">Don't let your Home empty, start chatting!</Text>
         </Stack>
       </Card>
     </Page>

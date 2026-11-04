@@ -53,7 +53,7 @@ export default function Home() {
         </Title>
 
         <Text size="lg" c="dimmed">
-          A clean, fast, and modern full-stack chat platform built with React and Mantine UI.
+          A new and modern chat room with a personal big idea
         </Text>
 
         <Group justify="center" gap="md" pt="xs">

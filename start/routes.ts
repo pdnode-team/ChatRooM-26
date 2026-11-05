@@ -25,8 +25,13 @@ router
 
 router
   .group(() => {
-    router.resource('spaces', controllers.Spaces).apiOnly()
-    router.on('dashboard').renderInertia('chat', {}).as('dashboard')
+    router
+      .group(() => {
+        router.post('', [controllers.Spaces, 'store'])
+      })
+      .prefix('spaces')
+      .as('spaces')
+    router.get('dashboard', [controllers.Dashboard, 'index']).as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
   })
   .use(middleware.auth())

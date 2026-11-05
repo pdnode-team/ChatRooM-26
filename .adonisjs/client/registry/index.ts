@@ -38,35 +38,11 @@ const routes = {
     tokens: [[0,"login"]],
     types: placeholder as Registry['session.store']['types'],
   },
-  'spaces.index': {
-    methods: ["GET","HEAD"],
-    pattern: '/spaces',
-    tokens: [[0,"spaces"]],
-    types: placeholder as Registry['spaces.index']['types'],
-  },
-  'spaces.store': {
+  'spaces.spaces.store': {
     methods: ["POST"],
     pattern: '/spaces',
     tokens: [[0,"spaces"]],
-    types: placeholder as Registry['spaces.store']['types'],
-  },
-  'spaces.show': {
-    methods: ["GET","HEAD"],
-    pattern: '/spaces/:id',
-    tokens: [[0,"spaces"],[1,"id"]],
-    types: placeholder as Registry['spaces.show']['types'],
-  },
-  'spaces.update': {
-    methods: ["PUT","PATCH"],
-    pattern: '/spaces/:id',
-    tokens: [[0,"spaces"],[1,"id"]],
-    types: placeholder as Registry['spaces.update']['types'],
-  },
-  'spaces.destroy': {
-    methods: ["DELETE"],
-    pattern: '/spaces/:id',
-    tokens: [[0,"spaces"],[1,"id"]],
-    types: placeholder as Registry['spaces.destroy']['types'],
+    types: placeholder as Registry['spaces.spaces.store']['types'],
   },
   'dashboard': {
     methods: ["GET","HEAD"],

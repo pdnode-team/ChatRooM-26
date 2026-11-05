@@ -1,25 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { createSpaceValidator } from '#validators/space'
 import Space from '#models/space'
+import { createSpaceValidator } from '#validators/space'
 
 export default class SpacesController {
-  /**
-   * Display a list of resource
-   */
-  async index({ auth }: HttpContext) {
-    const user = auth.getUserOrFail()
-
-    const spaces = await user
-      .related('spaces')
-      .query()
-      .orderBy('space_members.last_read_at', 'desc')
-
-    return spaces
-  }
-
-  /**
-   * Handle form submission for the create action
-   */
   async store({ request, auth, response }: HttpContext) {
     const user = auth.getUserOrFail()
     const payload = await request.validateUsing(createSpaceValidator)
@@ -30,23 +13,6 @@ export default class SpacesController {
       [user.id]: { role: 'OWNER' },
     })
 
-    return response.created({
-      data: space,
-    })
+    return response.redirect().toRoute('dashboard')
   }
-
-  /**
-   * Show individual record
-   */
-  async show({ params }: HttpContext) {}
-
-  /**
-   * Handle form submission for the edit action
-   */
-  async update({ params, request }: HttpContext) {}
-
-  /**
-   * Delete record
-   */
-  async destroy({ params }: HttpContext) {}
 }

@@ -3,7 +3,8 @@ import ChatLayout from '~/layouts/chat'
 import { Card, Stack, Text, ThemeIcon, Title } from '@mantine/core'
 import { MessageCircle } from 'lucide-react'
 
-export default function Chat() {
+export default function Chat({ spaces }: { spaces: any }) {
+  console.log(spaces)
   return (
     <Page title="Home" description="Overview of your spaces and chat rooms.">
       <Card withBorder radius="md" padding="xl" my="auto">

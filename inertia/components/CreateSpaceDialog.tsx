@@ -61,9 +61,6 @@ export function CreateSpaceDialog({ opened, onClose }: CreateSpaceModalProps) {
           />
           <Stack gap="xs">
             <Input.Wrapper label="Type" error={errors.type}>
-              <Text size="sm" fw={500}>
-                Type
-              </Text>
               <SegmentedControl
                 value={data.type}
                 onChange={(value) => setData('type', value)}
@@ -71,8 +68,8 @@ export function CreateSpaceDialog({ opened, onClose }: CreateSpaceModalProps) {
                 fullWidth
                 data={[
                   { label: 'Public Room', value: 'ROOM' },
-                  { label: 'Direct Message', value: 'DM' },
-                  { label: 'Group Chat', value: 'GROUP_DM' },
+                  { label: 'Direct Message', value: 'DM', disabled: true },
+                  { label: 'Group Chat', value: 'GROUP_DM', disabled: true },
                 ]}
               />
             </Input.Wrapper>

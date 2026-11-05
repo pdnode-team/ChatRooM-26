@@ -1,14 +1,40 @@
 import { type ReactNode } from 'react'
-import { AppShell, Box, Burger, Button, Group } from '@mantine/core'
+import {
+  AppShell,
+  Avatar,
+  Burger,
+  Button,
+  Group,
+  NavLink,
+  ScrollArea,
+  Stack,
+  Text,
+} from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
+import { Link, usePage } from '@inertiajs/react'
 import { MessageSquarePlus } from 'lucide-react'
 import Logo from '~/components/logo'
 import { CreateSpaceDialog } from '~/components/CreateSpaceDialog'
 
+export interface SpaceItem {
+  id: number
+  name: string | null
+  type: 'ROOM' | 'DM' | 'GROUP_DM'
+  avatar: string | null
+}
+
+interface PageProps {
+  spaces?: SpaceItem[]
+  [key: string]: unknown
+}
+
 export default function ChatLayout({ children }: { children: ReactNode }) {
-  const [sidebarOpened, { toggle: sidebarToggle }] = useDisclosure()
+  const [sidebarOpened, { toggle: sidebarToggle, close: sidebarClose }] = useDisclosure()
   const [createSpaceOpened, { open: createSpaceOpen, close: createSpaceClose }] =
     useDisclosure(false)
+
+  const { props, url } = usePage<PageProps>()
+  const spaces = props.spaces ?? []
 
   return (
     <AppShell
@@ -30,14 +56,63 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-        <Button
-          size="md"
-          leftSection={<MessageSquarePlus size={20} />}
-          variant="default"
-          onClick={createSpaceOpen}
-        >
-          Create a new Space
-        </Button>
+        <AppShell.Section mb="sm">
+          <Button
+            fullWidth
+            size="md"
+            leftSection={<MessageSquarePlus size={20} />}
+            variant="default"
+            onClick={createSpaceOpen}
+          >
+            Create a new Space
+          </Button>
+        </AppShell.Section>
+
+        <AppShell.Section grow component={ScrollArea}>
+          <Stack gap={4}>
+            {spaces.length === 0 ? (
+              <Text size="xs" c="dimmed" ta="center" py="xl">
+                No spaces yet. Create one!
+              </Text>
+            ) : (
+              spaces.map((space) => {
+                const displayName = space.name || 'Direct Message'
+                const initial = displayName.trim().charAt(0).toUpperCase() || '#'
+                const isActive = url.startsWith(`/spaces/${space.id}`)
+
+                return (
+                  <NavLink
+                    key={space.id}
+                    component={Link}
+                    href={`/spaces/${space.id}`}
+                    active={isActive}
+                    onClick={sidebarClose}
+                    color="olive"
+                    variant="light"
+                    style={{ borderRadius: 'var(--mantine-radius-md)' }}
+                    label={
+                      <Text size="sm" fw={500} truncate>
+                        {displayName}
+                      </Text>
+                    }
+                    leftSection={
+                      <Avatar
+                        src={space.avatar}
+                        alt={displayName}
+                        radius="md"
+                        size={32}
+                        color="olive"
+                      >
+                        {initial}
+                      </Avatar>
+                    }
+                  />
+                )
+              })
+            )}
+          </Stack>
+        </AppShell.Section>
+
         <CreateSpaceDialog opened={createSpaceOpened} onClose={createSpaceClose} />
       </AppShell.Navbar>
 

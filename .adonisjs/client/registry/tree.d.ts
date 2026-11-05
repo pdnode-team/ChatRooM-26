@@ -12,5 +12,12 @@ export interface ApiDefinition {
     store: typeof routes['session.store']
     destroy: typeof routes['session.destroy']
   }
+  spaces: {
+    index: typeof routes['spaces.index']
+    store: typeof routes['spaces.store']
+    show: typeof routes['spaces.show']
+    update: typeof routes['spaces.update']
+    destroy: typeof routes['spaces.destroy']
+  }
   dashboard: typeof routes['dashboard']
 }

@@ -25,7 +25,8 @@ router
 
 router
   .group(() => {
-    router.on('/dashboard').renderInertia('chat', {}).as('dashboard')
+    router.resource('spaces', controllers.Spaces).apiOnly()
+    router.on('dashboard').renderInertia('chat', {}).as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
   })
   .use(middleware.auth())

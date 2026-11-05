@@ -15,6 +15,7 @@ import { Link, usePage } from '@inertiajs/react'
 import { MessageSquarePlus } from 'lucide-react'
 import Logo from '~/components/logo'
 import { CreateSpaceDialog } from '~/components/CreateSpaceDialog'
+import { getSpaceColor } from '~/pages/chat'
 
 export interface SpaceItem {
   id: number
@@ -101,7 +102,7 @@ export default function ChatLayout({ children }: { children: ReactNode }) {
                         alt={displayName}
                         radius="md"
                         size={32}
-                        color="olive"
+                        color={getSpaceColor(space.id)}
                       >
                         {initial}
                       </Avatar>

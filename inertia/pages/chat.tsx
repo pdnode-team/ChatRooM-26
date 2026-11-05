@@ -1,30 +1,39 @@
 import Page from '~/components/page'
 import ChatLayout, { type SpaceItem } from '~/layouts/chat'
-import {
-  Avatar,
-  Badge,
-  Card,
-  Group,
-  Stack,
-  Text,
-  ThemeIcon,
-  Title,
-  UnstyledButton,
-} from '@mantine/core'
+import { Avatar, Card, Group, Stack, Text, ThemeIcon, Title, UnstyledButton } from '@mantine/core'
 import { Link } from '@inertiajs/react'
-import { ChevronRight, Hash, Lock, MessageCircle, Users } from 'lucide-react'
+import { ChevronRight, MessageCircle } from 'lucide-react'
 
-const spaceTypeConfig: Record<SpaceItem['type'], { label: string; icon: typeof Hash }> = {
-  ROOM: { label: 'Room', icon: Hash },
-  DM: { label: 'Direct', icon: Lock },
-  GROUP_DM: { label: 'Group', icon: Users },
+const AVATAR_PALETTE = [
+  'olive',
+  'teal',
+  'cyan',
+  'blue',
+  'indigo',
+  'grape',
+  'violet',
+  'pink',
+  'orange',
+  'amber',
+] as const
+
+export function getSpaceColor(id: number | string): string {
+  if (typeof id === 'number') {
+    return AVATAR_PALETTE[Math.abs(id) % AVATAR_PALETTE.length]
+  }
+
+  let hash = 5381
+  for (let i = 0; i < id.length; i++) {
+    hash = (hash * 33) ^ id.charCodeAt(i)
+  }
+  return AVATAR_PALETTE[Math.abs(hash) % AVATAR_PALETTE.length]
 }
 
 export default function Chat({ spaces = [] }: { spaces?: SpaceItem[] }) {
   const hasSpaces = spaces && spaces.length > 0
 
   return (
-    <Page title="Home" description="Overview of your spaces and chat rooms.">
+    <Page title="Home" description="Overview of your spaces">
       {!hasSpaces ? (
         <Card withBorder radius="md" padding="xl" my="auto">
           <Stack align="center" justify="center" gap="sm" ta="center" maw={460} mx="auto" py="xl">
@@ -42,8 +51,6 @@ export default function Chat({ spaces = [] }: { spaces?: SpaceItem[] }) {
           {spaces.map((space) => {
             const displayName = space.name || 'Direct Message'
             const initial = displayName.trim().charAt(0).toUpperCase() || '#'
-            const config = spaceTypeConfig[space.type] || spaceTypeConfig.ROOM
-            const Icon = config.icon
 
             return (
               <UnstyledButton
@@ -75,7 +82,7 @@ export default function Chat({ spaces = [] }: { spaces?: SpaceItem[] }) {
                       alt={displayName}
                       radius="md"
                       size={40}
-                      color="olive"
+                      color={getSpaceColor(space.id)}
                     >
                       {initial}
                     </Avatar>
@@ -89,12 +96,7 @@ export default function Chat({ spaces = [] }: { spaces?: SpaceItem[] }) {
                       </Text> */}
                     </div>
                   </Group>
-                  <Group gap="xs" wrap="nowrap">
-                    <Badge size="sm" variant="light" color="olive" leftSection={<Icon size={12} />}>
-                      {config.label}
-                    </Badge>
-                    <ChevronRight size={16} color="var(--mantine-color-gray-5)" />
-                  </Group>
+                  <ChevronRight size={16} color="var(--mantine-color-gray-5)" />
                 </Group>
               </UnstyledButton>
             )

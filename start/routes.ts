@@ -31,13 +31,21 @@ router
       })
       .prefix('spaces')
       .as('spaces')
-    router
-      .group(() => {
-        router.post('/check-email', [controllers.Users, 'checkEmail'])
-      })
-      .prefix('users')
-      .as('users')
+
     router.get('dashboard', [controllers.Dashboard, 'index']).as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
   })
   .use(middleware.auth())
+
+router
+  .group(() => {
+    router
+      .group(() => {
+        router.get('/check-email', [controllers.Users, 'checkEmail'])
+        router.get('/check-username', [controllers.Users, 'checkUsername'])
+      })
+      .prefix('users')
+      .as('users')
+  })
+  .prefix('api')
+  .as('apis')

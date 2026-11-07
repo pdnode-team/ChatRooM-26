@@ -18,4 +18,12 @@ export interface ApiDefinition {
     }
   }
   dashboard: typeof routes['dashboard']
+  apis: {
+    users: {
+      users: {
+        checkEmail: typeof routes['apis.users.users.check_email']
+        checkUsername: typeof routes['apis.users.users.check_username']
+      }
+    }
+  }
 }

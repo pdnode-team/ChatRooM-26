@@ -112,6 +112,32 @@ export interface Registry {
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/session_controller').default['destroy']>>>
     }
   }
+  'apis.users.users.check_email': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/users/check-email'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: ExtractQueryForGet<InferInput<(typeof import('#validators/user').checkEmailValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/users_controller').default['checkEmail']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/users_controller').default['checkEmail']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/users_controller').default['checkEmail']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'apis.users.users.check_username': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/users/check-username'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: ExtractQueryForGet<InferInput<(typeof import('#validators/user').checkUsernameValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/users_controller').default['checkUsername']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/users_controller').default['checkUsername']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/users_controller').default['checkUsername']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
 }
 
 export namespace Route {

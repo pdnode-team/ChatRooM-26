@@ -12,18 +12,24 @@ export type ScannedRoutes = {
     'spaces.spaces.store': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
     'session.destroy': { paramsTuple?: []; params?: {} }
+    'apis.users.users.check_email': { paramsTuple?: []; params?: {} }
+    'apis.users.users.check_username': { paramsTuple?: []; params?: {} }
   }
   GET: {
     'home': { paramsTuple?: []; params?: {} }
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'apis.users.users.check_email': { paramsTuple?: []; params?: {} }
+    'apis.users.users.check_username': { paramsTuple?: []; params?: {} }
   }
   HEAD: {
     'home': { paramsTuple?: []; params?: {} }
     'new_account.create': { paramsTuple?: []; params?: {} }
     'session.create': { paramsTuple?: []; params?: {} }
     'dashboard': { paramsTuple?: []; params?: {} }
+    'apis.users.users.check_email': { paramsTuple?: []; params?: {} }
+    'apis.users.users.check_username': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'new_account.store': { paramsTuple?: []; params?: {} }

@@ -56,6 +56,18 @@ const routes = {
     tokens: [[0,"logout"]],
     types: placeholder as Registry['session.destroy']['types'],
   },
+  'apis.users.users.check_email': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/users/check-email',
+    tokens: [[0,"api"],[0,"users"],[0,"check-email"]],
+    types: placeholder as Registry['apis.users.users.check_email']['types'],
+  },
+  'apis.users.users.check_username': {
+    methods: ["GET","HEAD"],
+    pattern: '/api/users/check-username',
+    tokens: [[0,"api"],[0,"users"],[0,"check-username"]],
+    types: placeholder as Registry['apis.users.users.check_username']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

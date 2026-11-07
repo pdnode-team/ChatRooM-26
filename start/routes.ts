@@ -31,6 +31,12 @@ router
       })
       .prefix('spaces')
       .as('spaces')
+    router
+      .group(() => {
+        router.post('/check-email', [controllers.Users, 'checkEmail'])
+      })
+      .prefix('users')
+      .as('users')
     router.get('dashboard', [controllers.Dashboard, 'index']).as('dashboard')
     router.post('logout', [controllers.Session, 'destroy'])
   })
